@@ -6,11 +6,10 @@ plugins {
 }
 
 group = "pw.evie.gameengine"
+
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
+repositories { mavenCentral() }
 
 dependencies {
     implementation("dev.kord:kord-core:0.8.0-M15")
@@ -18,10 +17,6 @@ dependencies {
     implementation("redis.clients:jedis:4.2.3")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "16"
-}
+tasks.withType<KotlinCompile> { kotlinOptions.jvmTarget = "16" }
 
-application {
-    mainClass.set("MainKt")
-}
+application { mainClass.set("MainKt") }

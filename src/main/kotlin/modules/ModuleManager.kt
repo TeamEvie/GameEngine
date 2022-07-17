@@ -3,12 +3,8 @@ package modules
 import dev.kord.core.Kord
 import modules.impl.KordPing
 
-/**
- * Holds all modules and is used to instantiate them.
- */
-class ModuleManager(
-    client: Kord
-) {
+/** Holds all modules and is used to instantiate them. */
+class ModuleManager(client: Kord) {
     val modules = ArrayList<Module>()
 
     init {

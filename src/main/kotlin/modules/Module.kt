@@ -1,6 +1,6 @@
 package modules
 
-import org.javacord.api.DiscordApi
+import client.GameEngine
 import org.javacord.api.entity.message.MessageFlag
 import org.javacord.api.interaction.SlashCommandInteraction
 import java.time.LocalDateTime
@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
  */
 open class Module
 constructor(
-    private val client: DiscordApi,
+    private val client: GameEngine,
     private val name: String,
     private val commands: Array<String>? = null,
 ) {
@@ -27,7 +27,7 @@ constructor(
         println("[Modules] Loading $name...")
         setupModule()
         if (commands !== null) {
-            client.addSlashCommandCreateListener {
+            client.discord.addSlashCommandCreateListener {
                 val interaction = it.slashCommandInteraction
 
                 if (commands.contains(interaction.commandName)) {

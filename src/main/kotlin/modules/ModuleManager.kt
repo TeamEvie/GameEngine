@@ -1,14 +1,16 @@
 package modules
 
+import modules.impl.Bake
 import modules.impl.KordPing
 import org.javacord.api.DiscordApi
 
 /** Holds all modules and is used to instantiate them. */
-class ModuleManager() {
+class ModuleManager {
     private val modules = ArrayList<Module>()
 
     fun init(client: DiscordApi) {
         modules.add(KordPing(client))
+        modules.add(Bake(client))
     }
 
     /**

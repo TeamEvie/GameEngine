@@ -1,12 +1,12 @@
 package modules.impl
 
-import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.respondEphemeral
-import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
 import modules.Module
+import org.javacord.api.DiscordApi
+import org.javacord.api.entity.message.MessageFlag
+import org.javacord.api.interaction.SlashCommandInteraction
 
-class KordPing(client: Kord) : Module(client, "KordPing", arrayOf("kord")) {
-    override suspend fun onCommand(req: GuildChatInputCommandInteraction) {
-        req.respondEphemeral { content = "pong!" }
+class KordPing(client: DiscordApi) : Module(client, "KordPing", arrayOf("kord")) {
+    override fun onCommand(req: SlashCommandInteraction) {
+        req.createImmediateResponder().setContent("pong from Javacord!").setFlags(MessageFlag.EPHEMERAL).respond()
     }
 }

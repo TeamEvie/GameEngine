@@ -1,13 +1,13 @@
 package modules
 
-import dev.kord.core.Kord
 import modules.impl.KordPing
+import org.javacord.api.DiscordApi
 
 /** Holds all modules and is used to instantiate them. */
-class ModuleManager(client: Kord) {
-    val modules = ArrayList<Module>()
+class ModuleManager() {
+    private val modules = ArrayList<Module>()
 
-    init {
+    fun init(client: DiscordApi) {
         modules.add(KordPing(client))
     }
 

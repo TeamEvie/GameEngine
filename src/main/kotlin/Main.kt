@@ -1,16 +1,5 @@
-import dev.kord.core.Kord
-import dev.kord.gateway.Intent
-import dev.kord.gateway.PrivilegedIntent
-import modules.ModuleManager
-import utils.EnvUtils
+import client.GameEngine
 
-suspend fun main() {
-    val kord = Kord(EnvUtils.getEnv("DISCORD_TOKEN"))
-
-    ModuleManager(kord)
-
-    kord.login {
-        @OptIn(PrivilegedIntent::class) //
-        intents += Intent.MessageContent
-    }
+fun main() {
+     GameEngine()
 }

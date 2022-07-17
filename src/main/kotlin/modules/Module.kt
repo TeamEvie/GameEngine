@@ -1,10 +1,8 @@
 package modules
 
-import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.respondEphemeral
-import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
-import dev.kord.core.event.interaction.GuildChatInputCommandInteractionCreateEvent
-import dev.kord.core.on
+import org.javacord.api.DiscordApi
+import org.javacord.api.entity.message.MessageFlag
+import org.javacord.api.interaction.SlashCommandInteraction
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -16,9 +14,9 @@ import java.time.format.DateTimeFormatter
  */
 open class Module
 constructor(
-        private val client: Kord,
-        private val name: String,
-        private val commands: Array<String>? = null,
+    private val client: DiscordApi,
+    private val name: String,
+    private val commands: Array<String>? = null,
 ) {
     init {
         moduleSetup()
@@ -29,12 +27,12 @@ constructor(
         println("[Modules] Loading $name...")
         setupModule()
         if (commands !== null) {
-            client.on<GuildChatInputCommandInteractionCreateEvent> {
-                val command = interaction.command
+            client.addSlashCommandCreateListener {
+                val interaction = it.slashCommandInteraction
 
-                if (commands.contains(command.data.name.value)) {
+                if (commands.contains(interaction.commandName)) {
                     println(
-                            "[Commands] Executing /${command.data.name.value} | \uD83E\uDDCD ${interaction.user.username}#${interaction.user.discriminator} | \uD83D\uDDD3 ${
+                            "[Commands] Executing /${interaction.commandName} | \uD83E\uDDCD ${interaction.user.name}#${interaction.user.discriminator} | \uD83D\uDDD3 ${
                             LocalDateTime.now().format(
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
                             )
@@ -54,7 +52,7 @@ constructor(
     open fun shutdown() {}
 
     /** Called when a chat input interaction is received and matches a command name. */
-    open suspend fun onCommand(req: GuildChatInputCommandInteraction) {
-        req.respondEphemeral { content = "This command isn't implemented!" }
+    open fun onCommand(req: SlashCommandInteraction) {
+        req.createImmediateResponder().setContent("Command not implemented!").setFlags(MessageFlag.EPHEMERAL).respond()
     }
 }

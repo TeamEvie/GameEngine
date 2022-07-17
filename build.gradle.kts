@@ -12,7 +12,7 @@ version = "1.0-SNAPSHOT"
 repositories { mavenCentral() }
 
 dependencies {
-    implementation("dev.kord:kord-core:0.8.0-M15")
+    implementation("org.javacord:javacord:3.5.0")
     implementation("org.slf4j:slf4j-nop:2.0.0-alpha6")
     implementation("redis.clients:jedis:4.2.3")
 }

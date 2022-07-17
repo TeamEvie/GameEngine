@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  Compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project

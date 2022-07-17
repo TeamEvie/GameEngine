@@ -24,3 +24,4 @@ eclipse
 run
 .DS_Store
 .DS_Store
+*.env

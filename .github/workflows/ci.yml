@@ -1,0 +1,23 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  Compile:
+    name: Compile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 16
+      - name: Compile project
+        run: ./gradlew build

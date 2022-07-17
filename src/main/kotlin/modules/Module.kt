@@ -32,7 +32,7 @@ constructor(
 
                 if (commands.contains(interaction.commandName)) {
                     println(
-                            "[Commands] Executing /${interaction.commandName} | \uD83E\uDDCD ${interaction.user.name}#${interaction.user.discriminator} | \uD83D\uDDD3 ${
+                        "[Commands] Executing /${interaction.commandName} | \uD83E\uDDCD ${interaction.user.name}#${interaction.user.discriminator} | \uD83D\uDDD3 ${
                             LocalDateTime.now().format(
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
                             )

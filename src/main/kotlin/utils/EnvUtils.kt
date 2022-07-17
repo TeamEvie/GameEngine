@@ -12,7 +12,8 @@ class EnvUtils {
                 if (value != null) {
                     return value
                 }
-            } catch (e: Exception) {}
+            } catch (e: Exception) {
+            }
 
             val file = File(".env")
 

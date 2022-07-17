@@ -20,4 +20,4 @@ jobs:
         with:
           java-version: 16
       - name: Compile project
-        run: ./gradlew build
+        run: chmod +x ./gradlew && ./gradlew clean build

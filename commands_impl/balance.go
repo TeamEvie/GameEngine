@@ -4,6 +4,8 @@ import (
 	"eviecoin/commands"
 	"eviecoin/database"
 	"eviecoin/interactions"
+	"eviecoin/responses"
+	"fmt"
 	"github.com/disgoorg/disgo/discord"
 	"github.com/disgoorg/disgo/events"
 	"strconv"
@@ -26,7 +28,10 @@ func handleBalance(db database.Database, e *events.ApplicationCommandInteraction
 	}
 
 	return interactions.VoidEditReply(e, discord.NewMessageUpdateBuilder().
-		SetContent("You have "+strconv.Itoa(int(user.Balance))+" coins.").
+		SetEmbeds(responses.NewInfoResponse().
+			SetTitle("Balance").
+			SetDescription(fmt.Sprintf("%d coins", user.Balance)).
+			Build()).
 		Build(),
 	)
 }

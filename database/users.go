@@ -1,7 +1,7 @@
 package database
 
 type User struct {
-	Balance int64 `json:"balance,omitempty"`
+	Balance int64 `json:"balance"`
 }
 
 type users struct {
@@ -10,5 +10,5 @@ type users struct {
 }
 
 var baseUser = User{
-	Balance: 0,
+	Balance: 10,
 }

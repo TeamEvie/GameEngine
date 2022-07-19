@@ -1,11 +1,27 @@
 package database
 
-import "github.com/disgoorg/disgo/json"
+import (
+	"encoding/json"
+)
 
-func serialize(v interface{}) ([]byte, error) {
-	return json.Marshal(v)
-}
+func deserializeUser(b []byte, v interface{}) error {
+	baseJson, err := json.Marshal(baseUser)
 
-func deserialize(b []byte, v interface{}) error {
-	return json.Unmarshal(b, v)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal(b, v)
+
+	for k, v := range baseUser.(map[string]interface{}) {
+		if _, ok := v.(map[string]interface{}); ok {
+			continue
+		}
+	}
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

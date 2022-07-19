@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN go build -o eviecoin cmd/main.go
+RUN go build -o eviecoin bin/main.go
 
 # Switch to alpine for a lightweight image since we don't need to install anything, native executable go brr
 FROM alpine

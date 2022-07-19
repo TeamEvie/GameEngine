@@ -1,10 +1,10 @@
 package database
 
 import (
-	"context"
 	"eviecoin/environment"
 	"github.com/fatih/color"
-	"github.com/go-redis/redis/v9"
+	"github.com/go-redis/redis/v8"
+	"github.com/nitishm/go-rejson/v4"
 	"os"
 )
 
@@ -19,26 +19,30 @@ func NewDatabase() Database {
 	return Database{
 		Users: users{
 			GetUser: getUser,
+			SetUser: setUser,
 		},
 	}
 }
 
-var client *redis.Client
-var ctx = context.Background()
+var client *rejson.Handler
 
-func getClient() *redis.Client {
+func getClient() *rejson.Handler {
 	if client != nil {
 		return client
 	}
 
 	color.Blue("[database] Creating a new redis instance...")
 
-	client = redis.NewClient(&redis.Options{
+	client = rejson.NewReJSONHandler()
+
+	rdb := redis.NewClient(&redis.Options{
 		Addr:     os.Getenv("REDIS_ADDRESS"),
 		Username: os.Getenv("REDIS_USERNAME"),
 		Password: os.Getenv("REDIS_PASSWORD"),
 		DB:       environment.GetIntWithDefault("REDIS_DB", 0),
 	})
+
+	client.SetGoRedisClient(rdb)
 
 	return client
 }

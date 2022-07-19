@@ -3,6 +3,7 @@ package commands_impl
 import (
 	"eviecoin/commands"
 	"eviecoin/database"
+	"eviecoin/interactions"
 	"github.com/disgoorg/disgo/discord"
 	"github.com/disgoorg/disgo/events"
 	"strconv"
@@ -16,13 +17,15 @@ var BalanceCommand = commands.Command{
 }
 
 func handleBalance(db database.Database, e *events.ApplicationCommandInteractionCreate) error {
+	interactions.Defer(e, false)
+
 	user, err := db.Users.GetUser(strconv.FormatUint(uint64(e.User().ID), 10))
 
 	if err != nil {
 		return err
 	}
 
-	return e.Respond(discord.InteractionResponseTypeCreateMessage, discord.NewMessageCreateBuilder().
+	return interactions.VoidEditReply(e, discord.NewMessageUpdateBuilder().
 		SetContent("You have "+strconv.Itoa(int(user.Balance))+" coins.").
 		Build(),
 	)

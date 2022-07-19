@@ -50,7 +50,7 @@ func getUser(userId string) (User, error) {
 
 	user := User{}
 
-	err = deserializeUser(json.([]byte), &user, baseUser)
+	err = deserializeUser(json.([]byte), &user)
 
 	defer func(userId string, user User) {
 		color.Blue("[database] Patching user(%s) in case there is missing required fields...", userId)

@@ -5,6 +5,7 @@ import (
 	"eviecoin/database"
 	"eviecoin/interactions"
 	"eviecoin/responses"
+	"eviecoin/responses/emojis"
 	"fmt"
 	"github.com/disgoorg/disgo/discord"
 	"github.com/disgoorg/disgo/events"
@@ -29,8 +30,8 @@ func handleBalance(db database.Database, e *events.ApplicationCommandInteraction
 
 	return interactions.VoidEditReply(e, discord.NewMessageUpdateBuilder().
 		SetEmbeds(responses.NewInfoResponse().
-			SetTitle("Balance").
-			SetDescription(fmt.Sprintf("%d coins", user.Balance)).
+			SetTitle(fmt.Sprintf("%s's balance", e.User().Username)).
+			SetDescription(fmt.Sprintf("**$EVIE**: %s%d", emojis.EvieCoin, user.Balance)).
 			Build()).
 		Build(),
 	)

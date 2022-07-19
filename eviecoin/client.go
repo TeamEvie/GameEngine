@@ -1,15 +1,14 @@
-package client
+package eviecoin
 
 import (
 	"eviecoin/database"
 	"eviecoin/discord"
 	"github.com/disgoorg/disgo/bot"
-	"github.com/go-redis/redis/v9"
 )
 
 type Client struct {
-	redis   *redis.Client
-	discord bot.Client
+	Database database.Database
+	Discord  bot.Client
 }
 
 var client *Client
@@ -19,8 +18,10 @@ func GetClient() *Client {
 		return client
 	}
 
+	databaseInstance := database.NewDatabase()
+
 	return &Client{
-		redis:   database.NewClient(),
-		discord: discord.NewClient(),
+		Database: databaseInstance,
+		Discord:  discord.NewClient(databaseInstance),
 	}
 }

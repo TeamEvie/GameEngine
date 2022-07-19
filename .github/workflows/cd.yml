@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: eviecoin
 
 jobs:
-  push:
+  Docker:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:

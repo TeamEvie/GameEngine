@@ -3,9 +3,16 @@ package database
 import (
 	"github.com/fatih/color"
 	"github.com/go-redis/redis/v8"
+	"strings"
 )
 
-func addBalance(userId string, amount int64) (User, error) {
+func NewSummonFrom(reason string) string {
+	reason = strings.Replace(reason, " ", "_", -1)
+	reason = strings.ToLower(reason)
+	return "me:" + reason
+}
+
+func addBalance(userId string, amount int64, from string) (User, error) {
 	user, err := getUser(formatUserKey(userId))
 
 	if err != nil {
@@ -20,7 +27,14 @@ func addBalance(userId string, amount int64) (User, error) {
 		return User{}, err
 	}
 
-	_ = writeToLedger(newTransaction(userId, amount, "add"))
+	var typeOfTransaction string
+	if amount < 0 {
+		typeOfTransaction = "debit"
+	} else {
+		typeOfTransaction = "credit"
+	}
+
+	_ = writeToLedger(newTransaction(userId, amount, typeOfTransaction, from))
 
 	return user, nil
 }

@@ -13,7 +13,7 @@ func NewSummonFrom(reason string) string {
 }
 
 func addBalance(userId string, amount int64, from string) (User, error) {
-	user, err := getUser(formatUserKey(userId))
+	user, err := getUser(userId)
 
 	if err != nil {
 		return User{}, err

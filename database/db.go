@@ -18,8 +18,9 @@ func NewDatabase() Database {
 
 	return Database{
 		Users: users{
-			GetUser: getUser,
-			SetUser: setUser,
+			GetUser:    getUser,
+			SetUser:    setUser,
+			AddBalance: addBalance,
 		},
 	}
 }

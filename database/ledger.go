@@ -12,19 +12,21 @@ type Transaction struct {
 	Amount    int64  `json:"amount"`
 	Timestamp int64  `json:"timestamp"`
 	Type      string `json:"type"`
+	From      string `json:"from"`
 }
 
 func generateTransactionId() string {
 	return strconv.FormatUint(uint64(snowflake.New(time.Now())), 10)
 }
 
-func newTransaction(userId string, amount int64, type_ string) Transaction {
+func newTransaction(userId string, amount int64, type_ string, from string) Transaction {
 	return Transaction{
 		Id:        generateTransactionId(),
 		UserId:    userId,
 		Amount:    amount,
 		Timestamp: time.Now().Unix(),
 		Type:      type_,
+		From:      from,
 	}
 }
 

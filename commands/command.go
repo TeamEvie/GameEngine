@@ -2,6 +2,8 @@ package commands
 
 import (
 	"eviecoin/database"
+	"eviecoin/interactions"
+	"eviecoin/responses"
 	"github.com/disgoorg/disgo/discord"
 	"github.com/disgoorg/disgo/events"
 	"github.com/fatih/color"
@@ -29,6 +31,7 @@ func (manager *Manager) OnApplicationCommandInteraction(e *events.ApplicationCom
 
 		if handler, ok := command.CommandHandlers[path]; ok {
 			if err := handler(manager.Database, e); err != nil {
+				_ = interactions.VoidEditReply(e, discord.NewMessageUpdateBuilder().SetEmbeds(responses.NewErrorResponse("An error occurred! Please try again!").Build()).Build())
 				color.Red("Error handling command: %s", err)
 			}
 			return

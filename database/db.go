@@ -2,6 +2,7 @@ package database
 
 import (
 	"eviecoin/environment"
+	"eviecoin/item_database"
 	"github.com/fatih/color"
 	"github.com/go-redis/redis/v8"
 	"github.com/nitishm/go-rejson/v4"
@@ -10,6 +11,7 @@ import (
 
 type Database struct {
 	Users users
+	Items item_database.ItemDatabase
 }
 
 func NewDatabase() Database {
@@ -17,10 +19,12 @@ func NewDatabase() Database {
 	getClient()
 
 	return Database{
+		Items: item_database.NewManager(),
 		Users: users{
 			GetUser:    getUser,
 			SetUser:    setUser,
 			AddBalance: addBalance,
+			AddItem:    addItem,
 		},
 	}
 }

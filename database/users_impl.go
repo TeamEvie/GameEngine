@@ -1,6 +1,7 @@
 package database
 
 import (
+	"eviecoin/items"
 	"github.com/fatih/color"
 	"github.com/go-redis/redis/v8"
 	"strings"
@@ -10,6 +11,26 @@ func NewSummonFrom(reason string) string {
 	reason = strings.Replace(reason, " ", "_", -1)
 	reason = strings.ToLower(reason)
 	return "me:" + reason
+}
+
+func addItem(userId string, item items.RawItemData) (User, error) {
+	user, err := getUser(userId)
+
+	if err != nil {
+		return User{}, err
+	}
+
+	user.Inventory = append(user.Inventory, item)
+
+	_, err = setUser(userId, user)
+
+	if err != nil {
+		return User{}, err
+	}
+
+	_ = writeToLedger(newTransaction(userId, 1, item.Id, NewSummonFrom("addItem")))
+
+	return user, nil
 }
 
 func addBalance(userId string, amount int64, from string) (User, error) {
